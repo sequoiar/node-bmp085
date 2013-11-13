@@ -21,6 +21,7 @@
     "bmp085-read": "./bin/bmp085-read"
   },
   "dependencies": {
+    "i2c": "latest",
     "commander": "~1.1.1",
     "optimist": "0.3.x"
   }
