@@ -33,18 +33,23 @@ wire.readBytes(0xaa, 22, function(err, res) {
               
               console.log('raw temperature data:'+ut);
 
-              var x1, x2, b5, t;
+            var x1, x2, b5, t, far;
 
-              x1 = (ut-eeprom[5])*eeprom[4]/0x8000;
-              x2 = (eeprom[9] * 0x800) / (x1 + eeprom[10]);
-              b5 = x1 + x2;
-              t = (b5 + 8) / 16.0;
+            x1 = (ut-eeprom[5]) * eeprom[4]/ Math.pow(2,15);
+            x2 = (eeprom[9] * Math.pow(2,11)) / (x1 + eeprom[10]);
+            b5 = x1 + x2;
+            t = (b5 + 8) / Math.pow(2,4);
+            t = t/10;
 
-              console.log('x1:'+x1);
-              console.log('x2:'+x2);
-              console.log('b5:'+b5);
-              console.log('t:'+t);
-
+            //Fahrenheit Readings...
+            far = (t*9/5+32);
+            far = Math.round(far);
+            
+            console.log('x1:'+x1);
+            console.log('x2:'+x2);
+            console.log('b5:'+b5);
+            console.log('t:'+t);
+            console.log('far:'+far);
           });
       }, 10); // waiting 10ms
   });
